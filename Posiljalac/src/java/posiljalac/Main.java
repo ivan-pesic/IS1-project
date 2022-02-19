@@ -5,6 +5,8 @@
  */
 package posiljalac;
 
+import entities.Mesto;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
@@ -72,12 +74,16 @@ public class Main {
 //                msg.setStringProperty("Adresa", "Vojvode Radomira Putnika 22");
 //                msg.setIntProperty("IdM", 1);
 
-                Message msg = context.createMessage();
-                msg.setIntProperty("Tip", Tipovi.KREIRANJE_KOMITENTA);
-                msg.setStringProperty("Naziv", "Dragan Mitrasinovic");
-                msg.setStringProperty("Adresa", "Kralja Petra I 70v");
-                msg.setIntProperty("IdM", 1);
+//                Message msg = context.createMessage();
+//                msg.setIntProperty("Tip", Tipovi.PROMENA_SEDISTA_ZA_KOMITENTA);
+//                msg.setStringProperty("Naziv", "Dragan Mitrasinovic");
+//                msg.setStringProperty("Adresa", "Kralja Petra I 70v");
+//                msg.setIntProperty("IdM", 2);
+//                msg.setIntProperty("IdK", 1);
 
+
+                Message msg = context.createMessage();
+                msg.setIntProperty("Tip", Tipovi.DOHVATANJE_SVIH_FILIJALA);
                 
                 msg.setJMSReplyTo(central_queue);
                 producer.send(s1_queue, msg);
@@ -97,7 +103,13 @@ public class Main {
                 int tip = msg.getIntProperty("Tip");
                 String poruka = msg.getStringProperty("Poruka");
                 System.out.println("Primljena poruka: " + poruka);
-                
+                ObjectMessage objMsg = (ObjectMessage) msg;
+                List m = (List) objMsg.getObject();
+                System.out.println(m.toString());
+//                List<Mesto> mesta = m;
+//                for (Mesto mesto : mesta) {
+//                    System.out.println(mesto);
+//                }
             } catch (JMSException ex) {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }

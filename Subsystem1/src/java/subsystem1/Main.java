@@ -22,7 +22,11 @@ import javax.persistence.Persistence;
 import requests.CreateFilijala;
 import requests.CreateKomitent;
 import requests.CreateMesto;
+import requests.GetAllFilijala;
+import requests.GetAllKomitent;
+import requests.GetAllMesto;
 import requests.Request;
+import requests.UpdateKomitent;
 
 /**
  *
@@ -82,6 +86,22 @@ public class Main {
                     }
                     case Codes.KREIRANJE_KOMITENTA: {
                         request = new CreateKomitent();
+                        break;
+                    }
+                    case Codes.PROMENA_SEDISTA_ZA_KOMITENTA: {
+                        request = new UpdateKomitent();
+                        break;
+                    }
+                    case Codes.DOHVATANJE_SVIH_MESTA: {
+                        request = new GetAllMesto();
+                        break;
+                    }
+                    case Codes.DOHVATANJE_SVIH_KOMITENATA: {
+                        request = new GetAllKomitent();
+                        break;
+                    }
+                    case Codes.DOHVATANJE_SVIH_FILIJALA: {
+                        request = new GetAllFilijala();
                         break;
                     }
                     default: throw new Exception("GRESKA: Poruka sadrzi nepostojeci tip.");
