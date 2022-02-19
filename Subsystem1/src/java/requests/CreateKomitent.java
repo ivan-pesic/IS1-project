@@ -5,7 +5,7 @@
  */
 package requests;
 
-import entities.Filijala;
+import entities.Komitent;
 import entities.Mesto;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,7 +21,7 @@ import subsystem1.Codes;
  *
  * @author Ivan
  */
-public class CreateFilijala extends Request {
+public class CreateKomitent extends Request {
 
     @Override
     public Message execute(Message message, JMSContext context) {
@@ -34,31 +34,31 @@ public class CreateFilijala extends Request {
             String Adresa = message.getStringProperty("Adresa");
             int IdM = message.getIntProperty("IdM");
             
-            Filijala filijala = new Filijala();
-            filijala.setNaziv(Naziv);
-            filijala.setAdresa(Adresa);
-            filijala.setIdM(IdM);
+            Komitent komitent = new Komitent();
+            komitent.setNaziv(Naziv);
+            komitent.setAdresa(Adresa);
+            komitent.setIdM(IdM);
             
             Mesto mesto = em.find(Mesto.class, IdM);
             if(mesto == null) throw new Exception("GRESKA: Mesto sa zadatim IdM ne postoji.");
             
             em.getTransaction().begin();
-            em.persist(filijala);
+            em.persist(komitent);
             em.getTransaction().commit();
             
-            returnMessage = super.createStringReturnMessage(Codes.OK, "Filijala uspesno kreirana u mestu: " + IdM, context);
+            returnMessage = super.createStringReturnMessage(Codes.OK, "Komitent uspesno kreiran u mestu: " + IdM, context);
             //povratnaPoruka = new Poruka(Codes.OK, null);
             
         } catch (JMSException ex) {
             Logger.getLogger(CreateMesto.class.getName()).log(Level.SEVERE, null, ex);
-            returnMessage = super.createStringReturnMessage(Codes.NOT_OK, "GRESKA: Kreiranje mesta nije uspelo.", context);
+            returnMessage = super.createStringReturnMessage(Codes.NOT_OK, "GRESKA: Kreiranje komitenta nije uspelo.", context);
         } catch (Exception ex) {
             Logger.getLogger(CreateFilijala.class.getName()).log(Level.SEVERE, null, ex);
             returnMessage = super.createStringReturnMessage(Codes.NOT_OK, ex.getMessage(), context);
         } finally {
             if(em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
-                returnMessage = super.createStringReturnMessage(Codes.NOT_OK, "GRESKA: Transakcija pri kreiranju filijale nije uspela.", context);
+                returnMessage = super.createStringReturnMessage(Codes.NOT_OK, "GRESKA: Transakcija pri kreiranju komitenta nije uspela.", context);
             }
             em.close();
         }
@@ -79,7 +79,7 @@ public class CreateFilijala extends Request {
         } catch (JMSException ex) {
             Logger.getLogger(CreateMesto.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return "Zahtev: Kreiranje filijale."
+        return "Zahtev: Kreiranje komitenta."
                 + "\nPodaci o zahtevu:\n"
                 + "\t1. Naziv: " + Naziv
                 + "\t2. Adresa: " + Adresa

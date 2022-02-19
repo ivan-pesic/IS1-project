@@ -19,6 +19,8 @@ import javax.jms.Queue;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import requests.CreateFilijala;
+import requests.CreateKomitent;
 import requests.CreateMesto;
 import requests.Request;
 
@@ -72,6 +74,14 @@ public class Main {
                 switch(type) {
                     case Codes.KREIRANJE_MESTA: {
                         request = new CreateMesto();
+                        break;
+                    }
+                    case Codes.KREIRANJE_FILIJALE_U_MESTU: {
+                        request = new CreateFilijala();
+                        break;
+                    }
+                    case Codes.KREIRANJE_KOMITENTA: {
+                        request = new CreateKomitent();
                         break;
                     }
                     default: throw new Exception("GRESKA: Poruka sadrzi nepostojeci tip.");

@@ -60,11 +60,25 @@ public class Main {
                 
                 
                 
+//                Message msg = context.createMessage();
+//                msg.setIntProperty("Tip", Tipovi.KREIRANJE_MESTA);
+//                msg.setStringProperty("PB", "26000");
+//                msg.setStringProperty("Naziv", "Pancevo");
+//                msg.setStringProperty("Poruka", "Kreiranje mesta: Naziv: Pancevo, PB: 26000");
+
+//                Message msg = context.createMessage();
+//                msg.setIntProperty("Tip", Tipovi.KREIRANJE_FILIJALE_U_MESTU);
+//                msg.setStringProperty("Naziv", "Unicredit Banka");
+//                msg.setStringProperty("Adresa", "Vojvode Radomira Putnika 22");
+//                msg.setIntProperty("IdM", 1);
+
                 Message msg = context.createMessage();
-                msg.setIntProperty("Tip", Tipovi.KREIRANJE_MESTA);
-                msg.setStringProperty("PB", "26000");
-                msg.setStringProperty("Naziv", "Pancevo");
-                msg.setStringProperty("Poruka", "Kreiranje mesta: Naziv: Pancevo, PB: 26000");
+                msg.setIntProperty("Tip", Tipovi.KREIRANJE_KOMITENTA);
+                msg.setStringProperty("Naziv", "Dragan Mitrasinovic");
+                msg.setStringProperty("Adresa", "Kralja Petra I 70v");
+                msg.setIntProperty("IdM", 1);
+
+                
                 msg.setJMSReplyTo(central_queue);
                 producer.send(s1_queue, msg);
                 
