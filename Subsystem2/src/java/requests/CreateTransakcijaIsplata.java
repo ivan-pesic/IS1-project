@@ -56,7 +56,7 @@ public class CreateTransakcijaIsplata extends Request {
             
             racun.setBrojTransakcija(racun.getBrojTransakcija() + 1);
             racun.setStanje(racun.getStanje() - Iznos);
-            if(racun.getStanje() < racun.getDozvMinus())
+            if(racun.getStanje() < -racun.getDozvMinus())
                 racun.setStatus('B');
             em.persist(racun);
             

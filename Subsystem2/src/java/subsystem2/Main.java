@@ -22,6 +22,8 @@ import javax.persistence.Persistence;
 import requests.CloseRacun;
 import requests.CreateKomitent;
 import requests.CreateRacun;
+import requests.CreateTransakcijaIsplata;
+import requests.CreateTransakcijaUplata;
 import requests.Request;
 
 /**
@@ -83,6 +85,14 @@ public class Main {
                     }
                     case Codes.ZATVARANJE_RACUNA: {
                         request = new CloseRacun();
+                        break;
+                    }
+                    case Codes.KREIRANJE_TRANSAKCIJE_UPLATA: {
+                        request = new CreateTransakcijaUplata();
+                        break;
+                    }
+                    case Codes.KREIRANJE_TRANSAKCIJE_ISPLATA: {
+                        request = new CreateTransakcijaIsplata();
                         break;
                     }
                     default: throw new Exception("GRESKA: Poruka sadrzi nepostojeci tip.");

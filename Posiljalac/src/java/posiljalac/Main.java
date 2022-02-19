@@ -97,11 +97,17 @@ public class Main {
 //                producer.send(s1_queue, objMsg);
                 
                 int idR = 1;
+                int IdF = 1;
+                String Svrha = "Placanje racuna";
+                double Iznos = 1500;
                 msg.setIntProperty("IdR", idR);
+                msg.setIntProperty("IdF", IdF);
+                msg.setStringProperty("Svrha", Svrha);
+                msg.setDoubleProperty("Iznos", Iznos);
 //                msg.setIntProperty("IdK", IdK);
 //                msg.setDoubleProperty("DozvMinus", dozvMinus);
                 
-                msg.setIntProperty("Tip", Tipovi.ZATVARANJE_RACUNA);
+                msg.setIntProperty("Tip", Tipovi.KREIRANJE_TRANSAKCIJE_UPLATA);
                 msg.setJMSReplyTo(central_queue);
                 //
                 producer.send(s2_queue, msg);
