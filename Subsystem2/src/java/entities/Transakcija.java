@@ -34,7 +34,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Transakcija.findAll", query = "SELECT t FROM Transakcija t"),
     @NamedQuery(name = "Transakcija.findByIdT", query = "SELECT t FROM Transakcija t WHERE t.idT = :idT"),
-    @NamedQuery(name = "Transakcija.findByIdRNa", query = "SELECT t FROM Transakcija t WHERE t.idRNa = :idRNa"),
     @NamedQuery(name = "Transakcija.findByIdF", query = "SELECT t FROM Transakcija t WHERE t.idF = :idF"),
     @NamedQuery(name = "Transakcija.findByDatumIVreme", query = "SELECT t FROM Transakcija t WHERE t.datumIVreme = :datumIVreme"),
     @NamedQuery(name = "Transakcija.findByIznos", query = "SELECT t FROM Transakcija t WHERE t.iznos = :iznos"),
@@ -49,8 +48,6 @@ public class Transakcija implements Serializable {
     @Basic(optional = false)
     @Column(name = "IdT")
     private Integer idT;
-    @Column(name = "IdRNa")
-    private Integer idRNa;
     @Column(name = "IdF")
     private Integer idF;
     @Basic(optional = false)
@@ -73,9 +70,12 @@ public class Transakcija implements Serializable {
     @NotNull
     @Column(name = "Tip")
     private Character tip;
-    @JoinColumn(name = "IdRSa", referencedColumnName = "IdR")
+    @JoinColumn(name = "IdR2", referencedColumnName = "IdR")
+    @ManyToOne
+    private Racun idR2;
+    @JoinColumn(name = "IdR1", referencedColumnName = "IdR")
     @ManyToOne(optional = false)
-    private Racun idRSa;
+    private Racun idR1;
 
     public Transakcija() {
     }
@@ -98,14 +98,6 @@ public class Transakcija implements Serializable {
 
     public void setIdT(Integer idT) {
         this.idT = idT;
-    }
-
-    public Integer getIdRNa() {
-        return idRNa;
-    }
-
-    public void setIdRNa(Integer idRNa) {
-        this.idRNa = idRNa;
     }
 
     public Integer getIdF() {
@@ -156,12 +148,20 @@ public class Transakcija implements Serializable {
         this.tip = tip;
     }
 
-    public Racun getIdRSa() {
-        return idRSa;
+    public Racun getIdR2() {
+        return idR2;
     }
 
-    public void setIdRSa(Racun idRSa) {
-        this.idRSa = idRSa;
+    public void setIdR2(Racun idR2) {
+        this.idR2 = idR2;
+    }
+
+    public Racun getIdR1() {
+        return idR1;
+    }
+
+    public void setIdR1(Racun idR1) {
+        this.idR1 = idR1;
     }
 
     @Override

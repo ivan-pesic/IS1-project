@@ -76,8 +76,6 @@ public class Racun implements Serializable {
     @NotNull
     @Column(name = "BrojTransakcija")
     private int brojTransakcija;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idRSa")
-    private List<Transakcija> transakcijaList;
     @JoinColumn(name = "IdK", referencedColumnName = "IdK")
     @ManyToOne(optional = false)
     private Komitent idK;
@@ -153,15 +151,6 @@ public class Racun implements Serializable {
 
     public void setBrojTransakcija(int brojTransakcija) {
         this.brojTransakcija = brojTransakcija;
-    }
-
-    @XmlTransient
-    public List<Transakcija> getTransakcijaList() {
-        return transakcijaList;
-    }
-
-    public void setTransakcijaList(List<Transakcija> transakcijaList) {
-        this.transakcijaList = transakcijaList;
     }
 
     public Komitent getIdK() {

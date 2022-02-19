@@ -50,7 +50,7 @@ public class CreateFilijala extends Request {
             //povratnaPoruka = new Poruka(Codes.OK, null);
             
         } catch (JMSException ex) {
-            Logger.getLogger(CreateMesto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CreateFilijala.class.getName()).log(Level.SEVERE, null, ex);
             returnMessage = super.createStringReturnMessage(Codes.NOT_OK, "GRESKA: Kreiranje mesta nije uspelo.", context);
         } catch (Exception ex) {
             Logger.getLogger(CreateFilijala.class.getName()).log(Level.SEVERE, null, ex);
@@ -77,7 +77,7 @@ public class CreateFilijala extends Request {
             Adresa = message.getStringProperty("Adresa");
             IdM = message.getIntProperty("IdM");
         } catch (JMSException ex) {
-            Logger.getLogger(CreateMesto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CreateFilijala.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "Zahtev: Kreiranje filijale."
                 + "\nPodaci o zahtevu:\n"

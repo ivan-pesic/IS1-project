@@ -58,8 +58,6 @@ public class Komitent implements Serializable {
     @NotNull
     @Column(name = "IdM")
     private int idM;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idK")
-    private List<Racun> racunList;
 
     public Komitent() {
     }
@@ -105,15 +103,6 @@ public class Komitent implements Serializable {
 
     public void setIdM(int idM) {
         this.idM = idM;
-    }
-
-    @XmlTransient
-    public List<Racun> getRacunList() {
-        return racunList;
-    }
-
-    public void setRacunList(List<Racun> racunList) {
-        this.racunList = racunList;
     }
 
     @Override

@@ -60,7 +60,7 @@ public class Main {
                 JMSConsumer consumer = context.createConsumer(central_queue);
                 JMSProducer producer = context.createProducer();
                 
-                
+                Message msg = context.createMessage();
                 
 //                Message msg = context.createMessage();
 //                msg.setIntProperty("Tip", Tipovi.KREIRANJE_MESTA);
@@ -69,9 +69,9 @@ public class Main {
 //                msg.setStringProperty("Poruka", "Kreiranje mesta: Naziv: Pancevo, PB: 26000");
 
 //                Message msg = context.createMessage();
-//                msg.setIntProperty("Tip", Tipovi.KREIRANJE_FILIJALE_U_MESTU);
-//                msg.setStringProperty("Naziv", "Unicredit Banka");
-//                msg.setStringProperty("Adresa", "Vojvode Radomira Putnika 22");
+//                msg.setIntProperty("Tip", Tipovi.KREIRANJE_KOMITENTA);
+//                msg.setStringProperty("Naziv", "Dragan Mitrasinovic");
+//                msg.setStringProperty("Adresa", "Kralja Petra I 70v");
 //                msg.setIntProperty("IdM", 1);
 
 //                Message msg = context.createMessage();
@@ -82,11 +82,10 @@ public class Main {
 //                msg.setIntProperty("IdK", 1);
 
 
-                Message msg = context.createMessage();
-                msg.setIntProperty("Tip", Tipovi.DOHVATANJE_SVIH_FILIJALA);
                 
-                msg.setJMSReplyTo(central_queue);
-                producer.send(s1_queue, msg);
+//                msg.setIntProperty("Tip", Tipovi.DOHVATANJE_SVIH_FILIJALA);
+                
+                
                 
 //                MestoOmotac mestoOmotac = new MestoOmotac("Beograd", "11000");
 //                Poruka poruka = new Poruka(Tipovi.KREIRANJE_MESTA, mestoOmotac);
@@ -96,16 +95,26 @@ public class Main {
 //                objMsg.setJMSReplyTo(central_queue);
 //                
 //                producer.send(s1_queue, objMsg);
-
+                
+                int idR = 1;
+                msg.setIntProperty("IdR", idR);
+//                msg.setIntProperty("IdK", IdK);
+//                msg.setDoubleProperty("DozvMinus", dozvMinus);
+                
+                msg.setIntProperty("Tip", Tipovi.ZATVARANJE_RACUNA);
+                msg.setJMSReplyTo(central_queue);
+                //
+                producer.send(s2_queue, msg);
+                //
                 System.out.println("Poslata poruka. Cekanje na prijem.");
                 
                 msg = consumer.receive();
                 int tip = msg.getIntProperty("Tip");
                 String poruka = msg.getStringProperty("Poruka");
                 System.out.println("Primljena poruka: " + poruka);
-                ObjectMessage objMsg = (ObjectMessage) msg;
-                List m = (List) objMsg.getObject();
-                System.out.println(m.toString());
+//                ObjectMessage objMsg = (ObjectMessage) msg;
+//                List m = (List) objMsg.getObject();
+//                System.out.println(m.toString());
 //                List<Mesto> mesta = m;
 //                for (Mesto mesto : mesta) {
 //                    System.out.println(mesto);
@@ -113,8 +122,6 @@ public class Main {
             } catch (JMSException ex) {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }
-        
-
     }
     
 }

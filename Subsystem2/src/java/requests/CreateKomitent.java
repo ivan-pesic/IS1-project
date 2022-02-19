@@ -6,7 +6,6 @@
 package requests;
 
 import entities.Komitent;
-import entities.Mesto;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.jms.JMSContext;
@@ -15,7 +14,7 @@ import javax.jms.Message;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import subsystem1.Codes;
+import subsystem2.Codes;
 
 /**
  *
@@ -25,7 +24,7 @@ public class CreateKomitent extends Request {
 
     @Override
     public Message execute(Message message, JMSContext context) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("Subsystem1PU");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("Subsystem2PU");
         EntityManager em = emf.createEntityManager();
         Message returnMessage = null;
         
@@ -38,9 +37,6 @@ public class CreateKomitent extends Request {
             komitent.setNaziv(Naziv);
             komitent.setAdresa(Adresa);
             komitent.setIdM(IdM);
-            
-            Mesto mesto = em.find(Mesto.class, IdM);
-            if(mesto == null) throw new Exception("GRESKA: Mesto sa zadatim IdM ne postoji.");
             
             em.getTransaction().begin();
             em.persist(komitent);
