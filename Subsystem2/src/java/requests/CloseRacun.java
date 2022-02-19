@@ -33,9 +33,9 @@ public class CloseRacun extends Request {
             Racun racun = em.find(Racun.class, IdR);
             
             if(racun == null) throw new Exception("GRESKA: Racun sa zadatim IdR ne postoji.");
-            
-            em.getTransaction().begin();
             racun.setStatus('U');
+            em.getTransaction().begin();
+            em.persist(racun);
             em.getTransaction().commit();
             
             returnMessage = super.createStringReturnMessage(Codes.OK, "Racun: " + IdR + " uspesno ugasen.", context);
