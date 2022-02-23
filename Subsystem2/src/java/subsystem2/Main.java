@@ -22,8 +22,11 @@ import javax.persistence.Persistence;
 import requests.CloseRacun;
 import requests.CreateKomitent;
 import requests.CreateRacun;
+import requests.CreateTransakcijaFromTo;
 import requests.CreateTransakcijaIsplata;
 import requests.CreateTransakcijaUplata;
+import requests.GetAllRacunForKomitent;
+import requests.GetAllTransakcijaForRacun;
 import requests.Request;
 
 /**
@@ -93,6 +96,18 @@ public class Main {
                     }
                     case Codes.KREIRANJE_TRANSAKCIJE_ISPLATA: {
                         request = new CreateTransakcijaIsplata();
+                        break;
+                    }
+                    case Codes.KREIRANJE_TRANSAKCIJE_PRENOS: {
+                        request = new CreateTransakcijaFromTo();
+                        break;
+                    }
+                    case Codes.DOHVATANJE_SVIH_RACUNA_ZA_KOMITENTA: {
+                        request = new GetAllRacunForKomitent();
+                        break;
+                    }
+                    case Codes.DOHVATANJE_SVIH_TRANSAKCIJA_ZA_RACUN: {
+                        request = new GetAllTransakcijaForRacun();
                         break;
                     }
                     default: throw new Exception("GRESKA: Poruka sadrzi nepostojeci tip.");
