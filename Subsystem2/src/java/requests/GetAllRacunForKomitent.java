@@ -36,7 +36,7 @@ public class GetAllRacunForKomitent extends Request {
             Komitent k = em.find(Komitent.class, IdK);
             if(k == null) throw new Exception("GRESKA: Komitent sa zadatim IdK ne postoji.");
             
-            TypedQuery<Racun> query = em.createNamedQuery("SELECT r FROM Racun r WHERE r.idk = :idk", Racun.class).setParameter("idk", IdK);
+            TypedQuery<Racun> query = em.createQuery("SELECT r FROM Racun r WHERE r.idK = :k", Racun.class).setParameter("k", k);
             List<Racun> listOfRacun = query.getResultList();
             
             em.close();

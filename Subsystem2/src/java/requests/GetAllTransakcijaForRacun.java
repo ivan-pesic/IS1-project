@@ -38,8 +38,8 @@ public class GetAllTransakcijaForRacun extends Request {
             if(r == null) throw new Exception("GRESKA: Racun sa zadatim IdR ne postoji.");
             
             TypedQuery<Transakcija> query = em
-                    .createNamedQuery("SELECT t FROM Transakcija t WHERE t.idr1 = :idr OR t.idr2 = :idr", Transakcija.class)
-                    .setParameter("idr", IdR);
+                    .createQuery("SELECT t FROM Transakcija t WHERE t.idR1 = :idr OR t.idR2 = :idr", Transakcija.class)
+                    .setParameter("idr", r);
             List<Transakcija> listOfTransakcija = query.getResultList();
             
             em.close();

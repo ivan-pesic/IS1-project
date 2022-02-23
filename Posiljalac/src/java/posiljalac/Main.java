@@ -62,52 +62,24 @@ public class Main {
                 
                 Message msg = context.createMessage();
                 
-//                Message msg = context.createMessage();
-//                msg.setIntProperty("Tip", Tipovi.KREIRANJE_MESTA);
-//                msg.setStringProperty("PB", "26000");
-//                msg.setStringProperty("Naziv", "Pancevo");
-//                msg.setStringProperty("Poruka", "Kreiranje mesta: Naziv: Pancevo, PB: 26000");
-
-//                Message msg = context.createMessage();
-//                msg.setIntProperty("Tip", Tipovi.KREIRANJE_KOMITENTA);
-//                msg.setStringProperty("Naziv", "Dragan Mitrasinovic");
-//                msg.setStringProperty("Adresa", "Kralja Petra I 70v");
-//                msg.setIntProperty("IdM", 1);
-
-//                Message msg = context.createMessage();
-//                msg.setIntProperty("Tip", Tipovi.PROMENA_SEDISTA_ZA_KOMITENTA);
-//                msg.setStringProperty("Naziv", "Dragan Mitrasinovic");
-//                msg.setStringProperty("Adresa", "Kralja Petra I 70v");
-//                msg.setIntProperty("IdM", 2);
-//                msg.setIntProperty("IdK", 1);
-
-
-                
-//                msg.setIntProperty("Tip", Tipovi.DOHVATANJE_SVIH_FILIJALA);
-                
-                
-                
-//                MestoOmotac mestoOmotac = new MestoOmotac("Beograd", "11000");
-//                Poruka poruka = new Poruka(Tipovi.KREIRANJE_MESTA, mestoOmotac);
-//                ObjectMessage objMsg = context.createObjectMessage(poruka);
-//                
-//                objMsg.setIntProperty("TIP", Tipovi.KREIRANJE_MESTA);
-//                objMsg.setJMSReplyTo(central_queue);
-//                
-//                producer.send(s1_queue, objMsg);
-                
-                int idR = 1;
-                int IdF = 1;
-                String Svrha = "Placanje racuna";
-                double Iznos = 1500;
-                msg.setIntProperty("IdR", idR);
-                msg.setIntProperty("IdF", IdF);
-                msg.setStringProperty("Svrha", Svrha);
-                msg.setDoubleProperty("Iznos", Iznos);
+//                int idR = 1;
+//                int IdF = 1;
+//                String Svrha = "Placanje racuna";
+//                double Iznos = 1500;
+//                msg.setIntProperty("IdR", idR);
+//                msg.setIntProperty("IdF", IdF);
+//                msg.setStringProperty("Svrha", Svrha);
+//                msg.setDoubleProperty("Iznos", Iznos);
 //                msg.setIntProperty("IdK", IdK);
 //                msg.setDoubleProperty("DozvMinus", dozvMinus);
                 
-                msg.setIntProperty("Tip", Tipovi.KREIRANJE_TRANSAKCIJE_UPLATA);
+                msg.setIntProperty("Tip", Tipovi.DOHVATANJE_SVIH_TRANSAKCIJA_ZA_RACUN);
+                msg.setIntProperty("IdR", 1);
+//                msg.setIntProperty("IdR1", 1);
+//                msg.setIntProperty("IdR2", 1);
+//                msg.setStringProperty("Svrha", "Samouplata - test");
+//                msg.setDoubleProperty("Iznos", 1000);
+                
                 msg.setJMSReplyTo(central_queue);
                 //
                 producer.send(s2_queue, msg);
@@ -118,9 +90,9 @@ public class Main {
                 int tip = msg.getIntProperty("Tip");
                 String poruka = msg.getStringProperty("Poruka");
                 System.out.println("Primljena poruka: " + poruka);
-//                ObjectMessage objMsg = (ObjectMessage) msg;
-//                List m = (List) objMsg.getObject();
-//                System.out.println(m.toString());
+                ObjectMessage objMsg = (ObjectMessage) msg;
+                List m = (List) objMsg.getObject();
+                System.out.println(m.toString());
 //                List<Mesto> mesta = m;
 //                for (Mesto mesto : mesta) {
 //                    System.out.println(mesto);
