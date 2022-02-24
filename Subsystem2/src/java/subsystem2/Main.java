@@ -28,6 +28,7 @@ import requests.CreateTransakcijaUplata;
 import requests.GetAllRacunForKomitent;
 import requests.GetAllTransakcijaForRacun;
 import requests.Request;
+import requests.UpdateKomitent;
 
 /**
  *
@@ -80,6 +81,10 @@ public class Main {
                 switch(type) {
                     case Codes.KREIRANJE_KOMITENTA: {
                         request = new CreateKomitent();
+                        break;
+                    }
+                    case Codes.PROMENA_SEDISTA_ZA_KOMITENTA: {
+                        request = new UpdateKomitent();
                         break;
                     }
                     case Codes.OTVARANJE_RACUNA: {

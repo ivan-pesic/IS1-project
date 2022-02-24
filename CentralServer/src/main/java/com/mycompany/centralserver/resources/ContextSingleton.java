@@ -14,7 +14,7 @@ import javax.jms.Queue;
  *
  * @author Ivan
  */
-public class JMSResursi {    
+public class ContextSingleton {    
     private static JMSContext context = null;
     
     public static JMSContext getContext(ConnectionFactory connectionFactory) {

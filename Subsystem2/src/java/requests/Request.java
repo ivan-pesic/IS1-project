@@ -6,6 +6,7 @@
 package requests;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,7 +34,7 @@ public abstract class Request implements Serializable {
         return msg;
     }
     public Message createListReturnMessage(int code, List list, String message, JMSContext context) {
-        ObjectMessage msg = context.createObjectMessage((Serializable) list);
+        ObjectMessage msg = context.createObjectMessage(new ArrayList(list));
         try {
             msg.setIntProperty("Tip", code);
             msg.setStringProperty("Poruka", message);
