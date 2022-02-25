@@ -183,7 +183,14 @@ public class Racun implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Racun[ idR=" + idR + " ]";
+        return "IdR: " + idR
+        + " IdM: " + idM
+        + " Status: " + status
+        + " Stanje: " + stanje
+        + " Dozvoljeni minus: " + dozvMinus
+        + " Datum i vreme: " + datumIVreme
+        + " Broj transakcija: " + brojTransakcija;
+
     }
     
 }

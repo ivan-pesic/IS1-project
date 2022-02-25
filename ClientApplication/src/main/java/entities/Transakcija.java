@@ -186,7 +186,15 @@ public class Transakcija implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Transakcija[ idT=" + idT + " ]";
+        return "IdT: " + idT +
+                " Redni broj: " + redniBroj +
+                " Iznos: " + iznos + 
+                " Tip: " + tip + 
+                " Svrha: " + svrha + 
+                " Datum i vreme: " + datumIVreme +
+                " IdR1: " + idR1 +
+                " IdR2: " + idR2 +
+                " IdF: " + idF;
     }
     
 }

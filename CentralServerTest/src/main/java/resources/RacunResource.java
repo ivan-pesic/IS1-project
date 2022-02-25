@@ -23,6 +23,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
 /**
@@ -47,6 +48,7 @@ public class RacunResource {
     Queue central_queue;
     
     @POST
+    @Produces("text/plain")
     @Path("kreiranje/{idk}/{idm}/{dozvM}")
     public Response otvoriRacun_5(@PathParam("idk") int IdK, @PathParam("idm") int IdM, @PathParam("dozvM") double DozvMinus) {
         /*
@@ -80,6 +82,7 @@ public class RacunResource {
     }
     
     @POST
+    @Produces("text/plain")
     @Path("zatvaranje/{idr}")
     public Response zatvoriRacun_6(@PathParam("idr") int IdR) {
         String message = null;
@@ -106,6 +109,7 @@ public class RacunResource {
     }
     
     @GET
+    @Produces("text/plain")
     @Path("sve/{idk}")
     public Response dohvatiSveRacuneZaKomitenta_13(@PathParam("idk") int IdK) {
         String message = null;
@@ -121,13 +125,18 @@ public class RacunResource {
             
             producer.send(s2_queue, request);
             Message reply = consumer.receive();
-            
-            ObjectMessage objMsg = (ObjectMessage) reply;
-            List r_list = (List) objMsg.getObject();
-            
-            List<Racun> racuni = r_list;
-
-            return Response.ok().entity(racuni).build();
+            if(reply.getIntProperty("Tip") == Codes.OK) {
+                ObjectMessage objMsg = (ObjectMessage) reply;
+                List r_list = (List) objMsg.getObject();
+                List<Racun> racuni = r_list;
+                StringBuilder sb = new StringBuilder();
+                for (Racun racun : racuni) {
+                    sb.append(racun).append("\n");
+                }
+                return Response.ok().entity(sb.toString()).build();
+            } else {
+                message = reply.getStringProperty("Poruka");
+            }
         } catch (JMSException ex) {
             Logger.getLogger(KomitentResource.class.getName()).log(Level.SEVERE, null, ex);
             message = ex.getMessage();

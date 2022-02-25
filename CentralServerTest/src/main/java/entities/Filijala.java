@@ -123,7 +123,7 @@ public class Filijala implements Serializable {
 
     @Override
     public String toString() {
-        return "entiteti.Filijala[ idF=" + idF + " ]";
+        return "IdF: " + idF + " Naziv: " + naziv + " Adresa: " + adresa + " IdM: " + idM;
     }
     
 }

@@ -109,7 +109,7 @@ public class Mesto implements Serializable {
 
     @Override
     public String toString() {
-        return "entiteti.Mesto[ idM=" + idM + " ]";
+        return "IdM: " + idM + " Naziv: " + naziv + " PB: " + pb;
     }
     
 }

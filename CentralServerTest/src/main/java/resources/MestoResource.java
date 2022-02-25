@@ -7,6 +7,7 @@ package resources;
 
 import com.mycompany.centralserver.resources.ContextSingleton;
 import entities.Mesto;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,7 +24,10 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import message.ReturnMessage;
 
 /**
  *
@@ -47,9 +51,11 @@ public class MestoResource {
     Queue central_queue;
     
     @POST
+    @Produces("text/plain")
     @Path("kreiranje/{naziv}/{pb}")
-    public Response kreiranjeMesta1(@PathParam("naziv") String Naziv, @PathParam("pb") String PB) {
+    public Response kreiranjeMesta_1(@PathParam("naziv") String Naziv, @PathParam("pb") String PB) {
         String message = null;
+        int code = Codes.NOT_OK;
         try {
             JMSContext context = ContextSingleton.getContext(connectionFactory);
             Message request = context.createMessage();
@@ -63,7 +69,7 @@ public class MestoResource {
             
             producer.send(s1_queue, request);
             Message reply = consumer.receive();
-            
+            code = reply.getIntProperty("Tip");
             message = reply.getStringProperty("Poruka");
         } catch (JMSException ex) {
             Logger.getLogger(KomitentResource.class.getName()).log(Level.SEVERE, null, ex);
@@ -74,9 +80,11 @@ public class MestoResource {
     }
     
     @GET
+    @Produces("text/plain")
     @Path("sve")
     public Response dohvatiSvаMesta10() {
         String message = null;
+        int code = Codes.NOT_OK;
         try {
             JMSContext context = ContextSingleton.getContext(connectionFactory);
             Message request = context.createMessage();
@@ -89,17 +97,24 @@ public class MestoResource {
             producer.send(s1_queue, request);
             Message reply = consumer.receive();
             
+            code = reply.getIntProperty("Tip");
+            
             ObjectMessage objMsg = (ObjectMessage) reply;
             List m_list = (List) objMsg.getObject();
             
-            List<Mesto> mesta = m_list;
-
-            return Response.ok().entity(mesta).build();
+            ArrayList<Mesto> mesta = (ArrayList<Mesto>) m_list;
+            StringBuilder sb = new StringBuilder();
+            for (Mesto mesto : mesta) {
+                sb.append(mesto.toString()).append("\n");
+            }
+            message = sb.toString();
+            return Response.ok().entity(message).build();
         } catch (JMSException ex) {
             Logger.getLogger(KomitentResource.class.getName()).log(Level.SEVERE, null, ex);
             message = ex.getMessage();
         }
-        
-        return Response.ok(message).build();
+        ReturnMessage returnMessage = new ReturnMessage(code);
+        returnMessage.setMessage(message);
+        return Response.ok(returnMessage).build();
     }
 }

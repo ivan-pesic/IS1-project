@@ -123,7 +123,7 @@ public class Komitent implements Serializable {
 
     @Override
     public String toString() {
-        return "entiteti.Komitent[ idK=" + idK + " ]";
+        return "IdK: " + idK + " Naziv: " + naziv + " Adresa: " + adresa + " IdM: " + idM;
     }
     
 }

@@ -34,9 +34,10 @@ public class UpdateKomitent extends Request {
             
             Komitent komitent = em.find(Komitent.class, IdK);
             
-            komitent.setIdM(IdM);
+            
             em.getTransaction().begin();
-            em.persist(komitent);
+            komitent.setIdM(IdM);
+            em.merge(komitent);
             em.getTransaction().commit();
             
             returnMessage = super.createStringReturnMessage(Codes.OK, "Komitentu uspesno azurirano mesto stanovanja: " + IdM, context);

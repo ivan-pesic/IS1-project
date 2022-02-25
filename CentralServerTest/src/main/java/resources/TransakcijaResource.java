@@ -50,6 +50,7 @@ public class TransakcijaResource {
     Queue central_queue;
     
     @POST
+    @Produces("text/plain")
     @Path("prenos/{idR1}/{idR2}/{iznos}/{svrha}")
     public Response prenosNovcaSaNa_7(@PathParam("idR1") int IdR1, @PathParam("idR2") int IdR2,
             @PathParam("iznos") double Iznos, @PathParam("svrha") String Svrha) {
@@ -86,6 +87,7 @@ public class TransakcijaResource {
     }
     
     @POST
+    @Produces("text/plain")
     @Path("uplata/{idR}/{idF}/{iznos}/{svrha}")
     public Response uplataNaRacun_8(@PathParam("idR") int IdR, @PathParam("idF") int IdF,
             @PathParam("iznos") double Iznos, @PathParam("svrha") String Svrha) {
@@ -122,6 +124,7 @@ public class TransakcijaResource {
     }
     
     @POST
+    @Produces("text/plain")
     @Path("isplata/{idR}/{idF}/{iznos}/{svrha}")
     public Response isplataSaRacuna_9(@PathParam("idR") int IdR, @PathParam("idF") int IdF,
             @PathParam("iznos") double Iznos, @PathParam("svrha") String Svrha) {
@@ -158,7 +161,7 @@ public class TransakcijaResource {
     }
     
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces("text/plain")
     @Path("sve/{idr}")
     public Response dohvatiSveTransakcijeZaRacun_14(@PathParam("idr") int IdR) {
         String message = null;
@@ -179,8 +182,13 @@ public class TransakcijaResource {
             List t_list = (List) objMsg.getObject();
             
             List<Transakcija> transakcije = t_list;
+            
+            StringBuilder sb = new StringBuilder();
+            for (Transakcija transakcija : transakcije) {
+                sb.append(transakcija.toString()).append("\n");
+            }
 
-            return Response.ok().entity(transakcije).build();
+            return Response.ok().entity(sb.toString()).build();
         } catch (JMSException ex) {
             Logger.getLogger(KomitentResource.class.getName()).log(Level.SEVERE, null, ex);
             message = ex.getMessage();

@@ -23,6 +23,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
 /**
@@ -47,6 +48,7 @@ public class FilijalaResource {
     Queue central_queue;
     
     @POST
+    @Produces("text/plain")
     @Path("kreiranje/{naziv}/{adresa}/{idm}")
     public Response kreiranjeFilijale_2(@PathParam("naziv") String Naziv, @PathParam("adresa") String Adresa, @PathParam("idm") int IdM) {
         String message = null;
@@ -75,6 +77,7 @@ public class FilijalaResource {
     }
     
     @GET
+    @Produces("text/plain")
     @Path("sve")
     public Response dohvatiSveFilijale11() {
         String message = null;
@@ -94,8 +97,12 @@ public class FilijalaResource {
             List f_list = (List) objMsg.getObject();
             
             List<Filijala> filijale = f_list;
+            StringBuilder sb = new StringBuilder();
+            for (Filijala filijala : filijale) {
+                sb.append(filijala.toString()).append("\n");
+            }
 
-            return Response.ok().entity(filijale).build();
+            return Response.ok().entity(sb.toString()).build();
         } catch (JMSException ex) {
             Logger.getLogger(KomitentResource.class.getName()).log(Level.SEVERE, null, ex);
             message = ex.getMessage();

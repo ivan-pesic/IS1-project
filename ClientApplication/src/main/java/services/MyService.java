@@ -11,6 +11,7 @@ import entities.Mesto;
 import entities.Racun;
 import entities.Transakcija;
 import java.util.List;
+import message.ReturnMessage;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -18,12 +19,17 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import testiranje.MojObjekat;
 
 /**
  *
  * @author Ivan
  */
 public interface MyService {
+    // test
+    @GET("test")
+    Call<String>test();
+    
     // 1
     @POST("mesto/kreiranje/{naziv}/{pb}")
     Call<String> kreirajMesto(
@@ -37,56 +43,70 @@ public interface MyService {
             @Path("adresa") String Adresa,
             @Path("idm") int IdM);
     
-    // 3.
-    @PUT("komitent/{naziv}/{adresa}/{mesto}")
-    Call<String> addKomitent(
-            @Path("naziv") String naziv,
-            @Path("adresa") String adresa,
-            @Path("mesto") int mesto);
+    // 3. @Path("kreiranje/{naziv}/{adresa}/{idm}")
+    @POST("komitent/kreiranje/{naziv}/{adresa}/{idm}")
+    Call<String> kreirajKomitenta(
+            @Path("naziv") String Naziv,
+            @Path("adresa") String Adresa,
+            @Path("idm") int IdM);
     
-    // 4.
-    @PUT("komitent/{komitent}/{mesto}")
-    Call<String> changeKomitentLocation(
-            @Path("komitent") int komitent,
-            @Path("mesto") int mesto);
+    // 4. @Path("mesto/{idk}/{idm}")
+    @POST("komitent/mesto/{idk}/{idm}")
+    Call<String> promeniSedisteKomitenta(
+            @Path("idk") int IdK,
+            @Path("idm") int IdM);
     
-    // 5
-    @PUT("racun/{komitent}/{mesto}/{dm}")
-    Call<String> addRacun(
-            @Path("komitent") int komitent,
-            @Path("mesto") int mesto,
-            @Path("dm") double dozvMinus);
+    // 5 @Path("kreiranje/{idk}/{idm}/{dozvM}")
+    @POST("racun/kreiranje/{idk}/{idm}/{dozvM}")
+    Call<String> kreiranjeRacuna(
+            @Path("idk") int IdK,
+            @Path("idm") int IdM,
+            @Path("dozvM") double DozvMinus);
     
-    // 6.
-    @POST("racun/{racun}")
-    Call<String> disableRacun(@Path("racun") int racun); 
+    // 6. @Path("zatvaranje/{idr}")
+    @POST("racun/zatvaranje/{idr}")
+    Call<String> zatvaranjeRacuna(@Path("idr") int IdR);
     
-    // 7. 8. 9.
-    @PUT("transakcija/{tip}/{racun}/{primfil}/{iznos}/{svrha}")
-    Call<ResponseBody> addTransakcija(
-            @Path("tip") String tip,
-            @Path("racun") int racun,
-            @Path("primfil") int primfil,
-            @Path("iznos") double iznos,
-            @Path("svrha") String svrha);
+    // 7. @Path("prenos/{idR1}/{idR2}/{iznos}/{svrha}")
+    @POST("transakcija/prenos/{idR1}/{idR2}/{iznos}/{svrha}")
+    Call<String> prenosSaNa(
+            @Path("idr1") int IdR1, 
+            @Path("idr2") int IdR2, 
+            @Path("iznos") double Iznos, 
+            @Path("svrha") String Svrha);
     
-    // 10.
-    @GET("mesto")
-    Call<List<Mesto>> getMesto();
+    // 8. @Path("uplata/{idR}/{idF}/{iznos}/{svrha}")
+    @POST("transakcija/uplata/{idR}/{idF}/{iznos}/{svrha}")
+    Call<String> uplataNa(
+            @Path("idR") int IdR, 
+            @Path("idF") int IdF, 
+            @Path("iznos") double Iznos, 
+            @Path("svrha") String Svrha);
     
-    // 11.
-    @GET("filijala")
-    Call<List<Filijala>> getFilijala();
+    // 9
+    @POST("transakcija/isplata/{idR}/{idF}/{iznos}/{svrha}")
+    Call<String> isplataSa(
+            @Path("idR") int IdR, 
+            @Path("idF") int IdF, 
+            @Path("iznos") double Iznos, 
+            @Path("svrha") String Svrha);
+    // 10
+    @GET("mesto/sve")
+    Call<String> dohvatiMesta();
     
-    // 12.
-    @GET("komitent")
-    Call<List<Komitent>> getKomitent();
+    // 11
+    @GET("filijala/sve")
+    Call<String> dohvatiFilijale();
     
-    // 13.
-    @GET("racun")
-    Call<List<Racun>> getRacun(@Query("komitent") int komitent);
+    // 12
+    @GET("komitent/sve")
+    Call<String> dohvatiKomitente();
     
-    // 14.
-    @GET("transakcija")
-    Call<List<Transakcija>> getTransakcija(@Query("racun") int racun);
+    // 13
+    @GET("racun/sve/{idk}")
+    Call<String> dohvatiRacuneZaKomitenta(@Path("idk") int IdK);
+    
+    // 14
+    @GET("transakcija/sve/{idr}")
+    Call<String> dohvatiTransakcijeZaRacun(@Path("idr") int IdR);
 }

@@ -49,6 +49,7 @@ public class KomitentResource {
     Queue central_queue;
     
     @POST
+    @Produces("text/plain")
     @Path("kreiranje/{naziv}/{adresa}/{idm}")
     public Response kreiranjeKomitenta_3(@PathParam("naziv") String Naziv, @PathParam("adresa") String Adresa, @PathParam("idm") int IdM) {
         String message = null;
@@ -80,6 +81,7 @@ public class KomitentResource {
     }
     
     @POST
+    @Produces("text/plain")
     @Path("mesto/{idk}/{idm}")
     public Response promenaSedistaKomitenta_4(@PathParam("idk") int IdK, @PathParam("idm") int IdM) {
         String message = null;
@@ -110,6 +112,7 @@ public class KomitentResource {
     }
     
     @GET
+    @Produces("text/plain")
     @Path("sve")
     public Response dohvatiSveKomitente_12() {
         String message = null;
@@ -119,7 +122,7 @@ public class KomitentResource {
             JMSConsumer consumer = context.createConsumer(central_queue);
             JMSProducer producer = context.createProducer();
             
-            request.setIntProperty("Tip", Codes.PROMENA_SEDISTA_ZA_KOMITENTA);
+            request.setIntProperty("Tip", Codes.DOHVATANJE_SVIH_KOMITENATA);
             request.setJMSReplyTo(central_queue);
             
             producer.send(s1_queue, request);
@@ -129,8 +132,12 @@ public class KomitentResource {
             List k_list = (List) objMsg.getObject();
             
             List<Komitent> komitenti = k_list;
+            StringBuilder sb = new StringBuilder();
+            for (Komitent komitent : komitenti) {
+                sb.append(komitent.toString()).append("\n");
+            }
 
-            return Response.ok().entity(komitenti).build();
+            return Response.ok().entity(sb.toString()).build();
         } catch (JMSException ex) {
             Logger.getLogger(KomitentResource.class.getName()).log(Level.SEVERE, null, ex);
             message = ex.getMessage();
